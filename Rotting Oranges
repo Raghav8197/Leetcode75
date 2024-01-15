@@ -1,0 +1,36 @@
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        res=-1
+        q=deque()
+        m=len(grid)
+        n=len(grid[0])
+        for i in range(m):
+            for j in range(n):
+                if(grid[i][j]==2):
+                    q.append((i,j))
+        while q:
+            x=len(q)
+            res+=1
+            while x>0:
+                a,b=q.popleft()
+                x-=1
+                if(a+1<m and grid[a+1][b]==1):
+                    grid[a+1][b]=2
+                    q.append([a+1,b])
+                if(b+1<n and grid[a][b+1]==1):
+                    grid[a][b+1]=2
+                    q.append([a,b+1])
+                if(a-1>=0 and grid[a-1][b]==1):
+                    grid[a-1][b]=2
+                    q.append([a-1,b])
+                if(b-1>=0 and grid[a][b-1]==1):
+                    grid[a][b-1]=2
+                    q.append([a,b-1])
+        
+        for i in range(m):
+            for j in range(n):
+                if(grid[i][j]==1):
+                    return -1
+        if(res>0):
+            return res
+        return 0
